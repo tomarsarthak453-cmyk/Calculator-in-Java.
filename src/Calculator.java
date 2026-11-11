@@ -5,9 +5,13 @@ import javax.swing.*; // In Java, the asterisk (*) is a wildcard symbol that mea
 
 
 public class Calculator {
-
+    //instance variables
     int boardWidth = 350 ;
     int boardHeight = 540 ;
+    Color customLightgrey = new Color(212,212,210) ;
+    Color customDarkGrey = new Color (80, 80,80);
+    Color customBlack = new Color (28 ,28,28);
+    Color customOrange = new Color (255,149,0);
     //we are using the JFrame class that we imported from javax.swing library and declare an object the string "Calculator" is the title for the window or for the  frame
     JFrame frame = new JFrame("Calculator");
     /* What is a Label?
@@ -17,7 +21,8 @@ public class Calculator {
     • How the code translates:
     • In Java Swing: You use the JLabel class (e.g., JLabel title = new JLabel("My Calculator");).
     • In Web Development (HTML): You use the <label> tag or a simple text container like <span> or <p>.*/
-    JLabel diplayLabel = new JLabel();
+    JLabel displayLabel1 = new JLabel();
+
     /*What is a Panel?
     A Panel is an invisible, structural container used to group multiple components (like buttons, labels, and text fields) together into a single layout section.
      • The Analogy: A tray inside a drawer, a cardboard divider box, or a layout folder.
@@ -27,11 +32,23 @@ public class Calculator {
      • In Web Development (HTML): You use a <div> tag (which stands for "division"), which acts exactly like an invisible panel layout box.
      */
      JPanel displayPanel = new JPanel();
+     JPanel buttonPanel = new JPanel();
+
+     String [] buttonValues = {
+             "AC", "+/-", "%", "÷",
+             "7", "8", "9", "×",
+             "4", "5", "6", "-",
+             "1", "2", "3", "+",
+             "0", ".", "√", "="
+     };
+
      /*
       DISCRIPTION FOR CONSTRUCTOR
       now as we have made an object we will use constructor as a constructor consists of already declared objects so we will use the functions of the class JFrame for which we made the object
       a constructor consists of functions , already declared objects
      */
+
+
     Calculator (){
         frame.setVisible(true);//if enter false here the screen will not be visible
         frame.setSize(boardWidth , boardHeight);
@@ -42,6 +59,64 @@ public class Calculator {
         //JFrame.DISPOSE_ON_CLOSE	Closes and destroys only that specific window, but keeps the rest of the application alive.	Pop-up windows (like an About Page or Settings Panel).
         //JFrame.HIDE_ON_CLOSE	(Default) Hides the window from view, but leaves it entirely in memory so you can reopen it later.	Tab-heavy apps or apps meant to stay open in the system tray.
         //JFrame.DO_NOTHING_ON_CLOSE	Ignore the click entirely. The window stays open.	For displaying a pop-up confirmation message like "Are you sure you want to exit without saving?" first.
+        displayLabel1.setBackground(customBlack);
+        displayLabel1.setForeground(Color.white);
+        /*
+         * This programming technique is called creating an anonymous object (or an inline object).
+           Instead of writing multiple lines of code to build the font first and then pass it to the label, you compress everything into a single, clean line of code.
+        *
+        */
+        displayLabel1.setFont(new Font("Arial",Font.PLAIN,80));
+        displayLabel1.setText("0");
+        displayLabel1.setHorizontalAlignment(JLabel.RIGHT);
+        /*
+
+        *  — The component is solid and paints its entire background. Swing uses this as a performance optimization so it knows it does not need to paint underlying components
+        *
+        *An underlying component is any UI element positioned physically behind another component on the screen
+        *
+           How the Layers Stack
+
+            • Bottom Layer (Parent Container) — Your main window (JFrame) or a background container (JPanel) sits at the bottom. It might hold a solid background color, a gradient, or a wallpaper image.
+            • Middle Layer (Sub-Panels) — Another JPanel placed inside that main container sits directly on top of it.
+            • Top Layer (Child Controls) — Buttons, text fields, or labels (JLabel) placed inside that sub-panel sit on the very top layer.
+        *
+        *
+        * */
+        displayLabel1.setOpaque(true);
+
+
+
+
+        displayPanel.setLayout(new BorderLayout());
+        /*
+        * Structure	5 fixed regions (NORTH, SOUTH, EAST, WEST, CENTER)
+        * Component Sizing	Unequal. CENTER takes all remaining space, while edges only stretch in one direction.
+        * Capacity	Holds up to 5 components (one per region; adding a second overwrites the first).
+        * Adding Components	Requires a position constant: panel.add(comp, BorderLayout.NORTH)
+        * Default For	JFrame, JDialog, and JWindow.
+        *
+        *  */
+        displayPanel.add(displayLabel1);
+        frame.add(displayPanel);
+        // Add the panel to the NORTH (top) region of the frame
+         frame.add(displayPanel, BorderLayout.NORTH);
+        /*
+
+     Structure   - A customizable grid of rows and columns (e.g., 4x4).
+     Component   - Sizing  Strictly Equal. Every cell is forced to the exact same width and height
+     Capacity    - Holds unlimited components (automatically adds columns or rows as needed).
+     Adding Components - Added sequentially left-to-right, top-to-bottom: panel.add(comp)
+     Default For - None (must be explicitly set using setLayout(new GridLayout(...))).
+           */
+        buttonPanel.setLayout(new GridLayout(5,4));
+        buttonPanel.setBackground(customBlack);
+        frame.add(buttonPanel);
+         for(int i =0;i<=buttonValues.length;i++){
+             JButton button = new JButton ();
+             button.setFont(new Font("Arial",Font.PLAIN,30));
+             button.setText(buttonValues[i]);
+             buttonPanel.add(button);}
 
 
     }
