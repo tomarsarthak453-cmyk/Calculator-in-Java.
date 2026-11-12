@@ -89,12 +89,13 @@ public class Calculator {
 
 
         displayPanel.setLayout(new BorderLayout());
-        /*
-        * Structure	5 fixed regions (NORTH, SOUTH, EAST, WEST, CENTER)
-        * Component Sizing	Unequal. CENTER takes all remaining space, while edges only stretch in one direction.
-        * Capacity	Holds up to 5 components (one per region; adding a second overwrites the first).
-        * Adding Components	Requires a position constant: panel.add(comp, BorderLayout.NORTH)
-        * Default For	JFrame, JDialog, and JWindow.
+        /* BorderLayout is a layout manager that divides a container into five fixed compass regions: North, South, East, West, and Center.
+
+        * Structure	-5 fixed regions (NORTH, SOUTH, EAST, WEST, CENTER)
+        * Component -Sizing	Unequal. CENTER takes all remaining space, while edges only stretch in one direction.
+        * Capacity	-Holds up to 5 components (one per region; adding a second overwrites the first).
+        * Adding -Components	Requires a position constant: panel.add(comp, BorderLayout.NORTH)
+        * Default For-	JFrame, JDialog, and JWindow.
         *
         *  */
         displayPanel.add(displayLabel1);
@@ -102,7 +103,7 @@ public class Calculator {
         // Add the panel to the NORTH (top) region of the frame
          frame.add(displayPanel, BorderLayout.NORTH);
         /*
-
+         GridLayout is a layout manager that arranges components in a rectangular grid of equally sized rows and columns.
      Structure   - A customizable grid of rows and columns (e.g., 4x4).
      Component   - Sizing  Strictly Equal. Every cell is forced to the exact same width and height
      Capacity    - Holds unlimited components (automatically adds columns or rows as needed).
@@ -113,10 +114,57 @@ public class Calculator {
         buttonPanel.setBackground(customBlack);
         frame.add(buttonPanel);
          for(int i =0;i<=buttonValues.length;i++){
+             /*
+             * The JButton class in Java creates a clickable push-button for graphical user interfaces (GUIs). It is part of the javax.swing package and triggers specific actions in your application when a user clicks it or presses a keyboard shortcut
+             * */
              JButton button = new JButton ();
              button.setFont(new Font("Arial",Font.PLAIN,30));
              button.setText(buttonValues[i]);
-             buttonPanel.add(button);}
+             buttonPanel.add(button);
+
+             button.addActionListener( e -> {
+                 String currentValue = displayLabel1.getText();
+                 String buttonValue = button.getText();
+                 /*
+                 *
+                  1. Why displayLabel1.getText().equals("0") is CORRECT
+
+                   1. displayLabel1.getText() runs first. Its job is to fetch the text on the screen, so it returns a String (for example, "0").
+                   2. Next, Java attaches .equals("0") onto that returned String ("0".equals("0")).
+                   3. Because a String has an .equals() method that returns a boolean (true or false), the if statement is completely happy.
+
+                  2. Why displayLabel1.setText("0").equals("0") is INCORRECT
+
+                   1. displayLabel1.setText("0") runs first. Its job is only to update the screen, so its return type is void (nothing/empty).
+                   2. Next, Java tries to run .equals("0") on void (void.equals("0")).
+                   3. Because "nothing" (void) is not an object and has no .equals() method, Java immediately stops and throws a compile error.
+                 *
+                 *
+                 *
+                 * */
+
+                 if (displayLabel1.getText().equals("0")){
+                     displayLabel1.setText(buttonValue);
+                 } else {
+                     displayLabel1.setText(currentValue+buttonValue);}
+             });
+
+                 //  if(!displayLabel1.getText().contains(".")){
+                  //      displayLabel1.setText(currentValue);
+
+
+
+
+
+
+
+
+
+
+         }
+
+
+
 
 
     }
